@@ -5,17 +5,19 @@
 // Map retention labels from Gmail to their lifespan
 // Specify the TTL for each label, emails will be deleted after that
 var PARENT_LABEL="retention/"
-	// If you have the labels below at the root level, set PARENT_LABEL to an empty string.
+// If you have the labels below at the root level, set PARENT_LABEL to an empty string.
 var MAP = [
-	//the TTL is in days
-	{label:"keep1day",	TTL:1},
-	{label:"keep3days",	TTL:3},
-	{label:"keep7days", TTL:7},
-	{label:"keep1month", TTL:30},
-	{label:"keep3months", TTL:90},
-	{label:"keep1year", TTL:365},
-	//add more if needed
+  //the TTL is in days
+  {label:"keep1day",	TTL:1},
+  {label:"keep3days",	TTL:3},
+  {label:"keep7days", TTL:7},
+  {label:"keep1month", TTL:30},
+  {label:"keep3months", TTL:90},
+  {label:"keep1year", TTL:365},
+  //add more if needed
 ];
+  
+var KEEP_UNREAD = false;
 
 function Intialize() {
 	return;
@@ -59,6 +61,9 @@ function cleanupTags() {
 		var purge  = Utilities.formatDate(age, Session.getScriptTimeZone(), "yyyy-MM-dd");
 		//build the filter string
 		var search = "label:" + PARENT_LABEL + rule['label'] + " AND before:" + purge;
+		if (KEEP_UNREAD) {
+			search += " AND is:read";
+		}
 		//this is just like the filter you would type in manually
 		try {
 		    //We are processing in pages of 100 messages to prevent script errors

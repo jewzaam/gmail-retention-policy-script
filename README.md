@@ -36,6 +36,7 @@ When you no longer want the script to purge your expired emails, then log back i
 
 The script itself has many comments if you would like to adjust it's innerworkings.
 
+### Custom Retention Labels
 If you have need of more complex retention durations, the MAP variable near the top can be updated to add additional rules.
 
 ~~~
@@ -52,3 +53,11 @@ var MAP = [
 	//add more if needed
 ];
 ~~~
+
+### Keep Unread Email
+If you want to keep all unread email regardless of retention label:
+
+```
+var KEEP_UNREAD = true;
+```
+The default is to not retain unread email.
